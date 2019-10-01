@@ -20,6 +20,10 @@ export default class App extends Component {
     className: null
   }
 
+  /* 
+    grabs the value stored in '@Attendance:className, and changes our state
+    value so that our text components have the correct name
+  */
   async getKey() {
     try {
       const value = await AsyncStorage.getItem('@Attendance:className');
@@ -29,6 +33,10 @@ export default class App extends Component {
     }
   }
 
+  /*
+    saves the 'currentName' state value in our AsyncStorage under
+    '@Attendance:className'
+  */
   async saveKey() {
     const value = this.state.currentName
     console.log(value)
@@ -39,6 +47,10 @@ export default class App extends Component {
     }
   }
 
+  /*
+    Reset the value of both our local state and the stored state for the class
+    name
+  */
   async resetKey() {
     try {
       await AsyncStorage.removeItem('@Attendance:className');
@@ -49,6 +61,9 @@ export default class App extends Component {
     }
   }
 
+  /*
+    renders out our button interactions and text views
+  */
   render() {
     return (
       <View style={styles.container}>

@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "attendance-dev-20191014162407-authRole",
+            "UnauthRoleArn": "arn:aws:iam::779315144355:role/attendance-dev-20191014162407-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::779315144355:role/attendance-dev-20191014162407-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "attendance-dev-20191014162407-deployment",
+            "UnauthRoleName": "attendance-dev-20191014162407-unauthRole",
+            "StackName": "attendance-dev-20191014162407",
+            "StackId": "arn:aws:cloudformation:us-west-2:779315144355:stack/attendance-dev-20191014162407/b8a13f80-eed9-11e9-8f1f-023afdc78754"
+        },
+        "categories": {
+            "auth": {
+                "attendanced768358a": {}
+            }
+        }
+    }
+}

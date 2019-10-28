@@ -1,5 +1,5 @@
-//This is an example code for NavigationDrawer//
-// From: https://aboutreact.com/react-native-navigation-drawer/
+//This is based on example code from 
+// https://aboutreact.com/react-native-navigation-drawer/
 
 import React, { Component } from 'react';
 //import react in our code.

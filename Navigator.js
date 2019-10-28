@@ -8,9 +8,9 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
-import Screen1 from './pages/Screen1';
-import Screen2 from './pages/Screen2';
-import Screen3 from './pages/Screen3';
+import HomeScreen from './pages/HomeScreen';
+import AddCourseScreen from './pages/AddCourseScreen';
+import SettingsScreen from './pages/SettingsScreen';
 
 class NavigationDrawerStructure extends Component {
   //Structure for the navigatin Drawer
@@ -22,7 +22,6 @@ class NavigationDrawerStructure extends Component {
     return (
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
-          {/*Donute Button Image */}
           <Image
             source={require('./image/drawer.png')}
             style={{ width: 25, height: 25, marginLeft: 5 }}
@@ -34,9 +33,9 @@ class NavigationDrawerStructure extends Component {
 }
 
 const FirstActivity_StackNavigator = createStackNavigator({
-  //All the screen from the Screen1 will be indexed here
+  //All the screen from the Home Screen will be indexed here
   First: {
-    screen: Screen1,
+    screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Demo Screen 1',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
@@ -48,12 +47,12 @@ const FirstActivity_StackNavigator = createStackNavigator({
   },
 });
 
-const Screen2_StackNavigator = createStackNavigator({
+const AddCourse_StackNavigator = createStackNavigator({
   //All the screen from the Screen2 will be indexed here
   Second: {
-    screen: Screen2,
+    screen: AddCourseScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 2',
+      title: 'Add Course',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#FF9800',
@@ -63,12 +62,12 @@ const Screen2_StackNavigator = createStackNavigator({
   },
 });
 
-const Screen3_StackNavigator = createStackNavigator({
+const Settings_StackNavigator = createStackNavigator({
   //All the screen from the Screen3 will be indexed here
   Third: {
-    screen: Screen3,
+    screen: SettingsScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 3',
+      title: 'Settings',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#FF9800',
@@ -80,25 +79,25 @@ const Screen3_StackNavigator = createStackNavigator({
 
 const DrawerNavigatorExample = createDrawerNavigator({
   //Drawer Optons and indexing
-  Screen1: {
+  HomeScreen: {
     //Title
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 1',
+      drawerLabel: 'Home',
     },
   },
-  Screen2: {
+  AddCourseScreen: {
     //Title
-    screen: Screen2_StackNavigator,
+    screen: AddCourse_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 2',
+      drawerLabel: 'Add Course',
     },
   },
-  Screen3: {
+  SettingsScreen: {
     //Title
-    screen: Screen3_StackNavigator,
+    screen: Settings_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 3',
+      drawerLabel: 'Settings',
     },
   },
 });

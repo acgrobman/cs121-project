@@ -5,7 +5,7 @@ PreSense is an attendance application designed to simplify attendance taking thr
 
 ## Context
 This application is a work-in-progess being built as a part of the Software Development course at Harvey Mudd College. In accordance 
-with class priciples, this is posted publicly on GitHub. Any use of this repository must be consistent with the 
+with class principles, this is posted publicly on GitHub. Any use of this repository must be consistent with the 
 [Honor Code](https://www.hmc.edu/ashmc/honor-code/).
 
 ## Setup

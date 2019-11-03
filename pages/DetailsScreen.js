@@ -5,7 +5,15 @@ import { View, Text } from 'react-native';
 
 import {IndicatorViewPager,  PagerDotIndicator} from 'rn-viewpager';
 
+import CameraScreen from './details_subscreens/CameraScreen';
+import RosterScreen from './details_subscreens/RosterScreen';
+import GraphScreen from './details_subscreens/GraphsScreen';
+import RemediationScreen from './details_subscreens/RemediationScreen';
+
+
 export default class DetailsScreen extends Component {
+  // Note: this.props.navigation.getParam('course', 'default course') has our course number
+
   render() {
     return (
       <View style={{ flex: 1}}>
@@ -14,32 +22,18 @@ export default class DetailsScreen extends Component {
           style={{ flex: 1 }}
           indicator={this._renderDotIndicator()}>
           {/*_renderDotIndicator() will return the PagerDotIndicator*/}
-          <View
-            style={{
-              backgroundColor: '#C70039',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{ color: 'white', fontSize: 30 }}>One {JSON.stringify(this.props.navigation.getParam('course', 'default course'))}</Text>
+          <View>          
+            <CameraScreen navigation={this.props.navigation}/>
           </View>
-          <View
-            style={{
-              backgroundColor: '#FF5733',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{ color: 'white', fontSize: 30 }}>Two</Text>
+
+          <View>          
+            <RosterScreen navigation={this.props.navigation}/>
           </View>
-          <View
-            style={{
-              backgroundColor: '#FFC300',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{ color: 'white', fontSize: 30 }}>Three</Text>
+          <View>          
+            <GraphScreen navigation={this.props.navigation}/>
+          </View>
+          <View>          
+            <RemediationScreen navigation={this.props.navigation}/>
           </View>
         </IndicatorViewPager>
       </View>
@@ -47,6 +41,6 @@ export default class DetailsScreen extends Component {
   }
 
   _renderDotIndicator() {
-    return <PagerDotIndicator pageCount={3} />;
+    return <PagerDotIndicator pageCount={4} />;
   }
 }

@@ -24,6 +24,28 @@ class NavigationDrawerStructure extends Component {
         <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
           <Image
             source={require('./assets/drawer.png')}
+            style={{ width: 25, height: 25, marginRight: 5 }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+// Component for adding a course from HomeScreen
+class NavBarPlusSign extends Component {
+  
+  // Dummy on press function that currently does nothing
+  addCourse = () => {
+    alert('Feature not implemented');
+  }
+
+  render() {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity onPress={this.addCourse.bind(this)}>
+          <Image
+            source={require('./assets/add-plus-button.png')}
             style={{ width: 25, height: 25, marginLeft: 5 }}
           />
         </TouchableOpacity>
@@ -37,8 +59,9 @@ const FirstActivity_StackNavigator = createStackNavigator({
   First: {
     screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 1',
+      title: 'PreSense',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerRight: <NavBarPlusSign navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#FF9800',
       },

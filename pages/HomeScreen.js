@@ -13,7 +13,7 @@ export default class HomeScreen extends Component {
   renderItem = ({ index }) => {
     return (
       <View style={{ height: 50 }}>
-        <TouchableOpacity onPress={()=>alert('Pressed')}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', { course: index })}>
           <Text>Item {index}</Text>
         </TouchableOpacity>
       </View>

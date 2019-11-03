@@ -11,6 +11,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './pages/HomeScreen';
 import AddCourseScreen from './pages/AddCourseScreen';
 import SettingsScreen from './pages/SettingsScreen';
+import DetailsScreen from './pages/DetailsScreen';
 
 class NavigationDrawerStructure extends Component {
   //Structure for the navigatin Drawer
@@ -56,18 +57,28 @@ class NavBarPlusSign extends Component {
 
 const FirstActivity_StackNavigator = createStackNavigator({
   //All the screen from the Home Screen will be indexed here
-  First: {
+  Home: {
     screen: HomeScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'PreSense',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerRight: <NavBarPlusSign navigationProps={navigation} />,
-      headerStyle: {
-        backgroundColor: '#FF9800',
-      },
-      headerTintColor: '#fff',
     }),
   },
+  Details: {
+    screen: DetailsScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Course Details',
+      //headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+    }),
+  },
+},{
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#65bf90',
+    },
+    headerTintColor: '#fff',
+  }
 });
 
 const AddCourse_StackNavigator = createStackNavigator({

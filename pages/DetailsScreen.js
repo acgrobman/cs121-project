@@ -20,7 +20,8 @@ export default class DetailsScreen extends Component {
         {/*Example of Dot Indicator*/}
         <IndicatorViewPager
           style={{ flex: 1 }}
-          indicator={this._renderDotIndicator()}>
+          indicator={this._renderDotIndicator()}
+          initialPage={1}>
           {/*_renderDotIndicator() will return the PagerDotIndicator*/}
           <View>          
             <CameraScreen navigation={this.props.navigation}/>

@@ -6,25 +6,27 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 // import all basic components
 
-import { ScrollView } from 'react-navigation'
+import { FlatList } from 'react-navigation'
+import { TouchableOpacity } from 'react-native-gesture-handler';
  
 export default class HomeScreen extends Component {
   renderItem = ({ index }) => {
     return (
       <View style={{ height: 50 }}>
-        <Text style={{ textAlign: 'center' }}>Item {index}</Text>
+        <TouchableOpacity onPress={()=>alert('Pressed')}>
+          <Text>Item {index}</Text>
+        </TouchableOpacity>
       </View>
     );
   };
   
   render() {
-    const data = new Array(150).fill("Test")
+    const data = new Array(3).fill("Test")
     //TODO: data needs to be somehow gotten to be the class lists
     return (
-      <View style={styles.MainContainer}>
-        <Text> Home  Screen </Text>
-        
-        <ScrollView
+      <View>
+        {(data && data.constructor === Array && data.length === 0) ? <Text> Add a course to get started</Text> : <Text></Text>}
+        <FlatList
           data={data}
           renderItem={this.renderItem}
           contentContainerStyle={{padding: 10}}

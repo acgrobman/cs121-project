@@ -1,7 +1,11 @@
 // Tutorial code from https://aboutreact.com/react-native-navigation-drawer/
 import React, { Component } from 'react';
 //import react in our code.
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text, Linking } from 'react-native';
+import SafeAreaView from 'react-native-safe-area-view';
+import { DrawerItems } from 'react-navigation-drawer';
+import { ScrollView } from 'react-navigation'
+import Icon from 'react-native-vector-icons/Entypo';
 // import all basic components
 
 //For React Navigation 4+
@@ -21,12 +25,7 @@ class NavigationDrawerStructure extends Component {
   render() {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
-          <Image
-            source={require('./assets/drawer.png')}
-            style={{ width: 25, height: 25, marginRight: 5 }}
-          />
-        </TouchableOpacity>
+        <Icon name='menu' color='white' size={30} onPress={this.toggleDrawer.bind(this)} />
       </View>
     );
   }
@@ -43,12 +42,7 @@ class NavBarPlusSign extends Component {
   render() {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={this.addCourse.bind(this)}>
-          <Image
-            source={require('./assets/add-plus-button.png')}
-            style={{ width: 25, height: 25, marginLeft: 5 }}
-          />
-        </TouchableOpacity>
+        <Icon name='plus' color='white' size={30} onPress={this.addCourse.bind(this)} />
       </View>
     );
   }
@@ -100,6 +94,32 @@ const Settings_StackNavigator = createStackNavigator({
   },
 });
 
+const CustomDrawerContentComponent = props => (
+  
+  <ScrollView contentContainerStyle={{justifyContent: 'space-between'}}>
+    <SafeAreaView
+      style={styles.container}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
+      <DrawerItems {...props} />
+    </SafeAreaView>
+    <SafeAreaView 
+      style={styles.container}
+      forceInset={{top: 'always', horizontal: 'never'}}
+    >
+      <Text style={{padding: 5}} onPress={()=>Linking.openURL('https://youtu.be/dQw4w9WgXcQ')}>
+        Made with ❤️ by The BlunderCatz
+      </Text>
+    </SafeAreaView>
+  </ScrollView>
+);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
 const DrawerNavigatorExample = createDrawerNavigator({
   //Drawer Optons and indexing
   HomeScreen: {
@@ -107,6 +127,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Home',
+      drawerIcon: <Icon name='home' />
     },
   },
   AddCourseScreen: {
@@ -114,6 +135,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: AddCourse_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Add Course',
+      drawerIcon: <Icon name='plus' />
     },
   },
   SettingsScreen: {
@@ -121,8 +143,11 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: Settings_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Settings',
+      drawerIcon: <Icon name='cog' />
     },
   },
+}, {
+    contentComponent: CustomDrawerContentComponent,
 });
 
 export default createAppContainer(DrawerNavigatorExample);

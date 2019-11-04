@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 //import react in our code.
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 // import all basic components
 
 import { FlatList } from 'react-navigation'
@@ -33,13 +33,3 @@ export default class HomeScreen extends Component {
     );
   }
 }
- 
-const styles = StyleSheet.create({
-  MainContainer: {
-    flex: 1,
-    paddingTop: 20,
-    alignItems: 'center',
-    marginTop: 50,
-    justifyContent: 'center',
-  },
-});

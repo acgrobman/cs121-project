@@ -9,7 +9,7 @@ export default class RosterScreen extends Component {
       title={item.name}
       subtitle={item.subtitle}
       leftAvatar={{ source: { uri: item.avatar_url } }}
-      onPres={() => alert('student details not yet implemented')}
+      onPress={() => alert('student details not yet implemented')}
       bottomDivider
       chevron
     />

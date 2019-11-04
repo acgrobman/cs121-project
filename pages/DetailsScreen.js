@@ -26,7 +26,6 @@ export default class DetailsScreen extends Component {
           <View>          
             <CameraScreen navigation={this.props.navigation}/>
           </View>
-
           <View>          
             <RosterScreen navigation={this.props.navigation}/>
           </View>

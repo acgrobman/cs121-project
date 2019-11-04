@@ -7,15 +7,14 @@ import { StyleSheet, View, Text } from 'react-native';
 // import all basic components
 
 import { FlatList } from 'react-navigation'
-import { TouchableOpacity } from 'react-native-gesture-handler';
  
 export default class HomeScreen extends Component {
   renderItem = ({ index }) => {
     return (
       <View style={{ height: 50 }}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', { course: index })}>
-          <Text>Item {index}</Text>
-        </TouchableOpacity>
+        <Text onPress={() => this.props.navigation.navigate('Details', { course: index })}>
+          Item {index}
+        </Text>
       </View>
     );
   };

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text} from 'react-native';
+import { FlatList } from 'react-navigation'
 
 export default class RosterScreen extends Component {
   renderItem = ({ index }) => {
     return (
       <View style={{ height: 50 }}>
-        <TouchableOpacity onPress={() => alert('Details of students nyi')}>
-          <Text>Item {index}</Text>
-        </TouchableOpacity>
+          <Text onPress={() => alert('Details of students nyi')}>
+            Student {index}
+          </Text>
       </View>
     );
   };

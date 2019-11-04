@@ -7,17 +7,17 @@ import { StyleSheet, View, Text } from 'react-native';
 // import all basic components
 
 import { FlatList } from 'react-navigation'
+import { ListItem } from 'react-native-elements'
  
 export default class HomeScreen extends Component {
-  renderItem = ({ index }) => {
-    return (
-      <View style={{ height: 50 }}>
-        <Text onPress={() => this.props.navigation.navigate('Details', { course: index })}>
-          Item {index}
-        </Text>
-      </View>
-    );
-  };
+  renderItem = ({ index }) => (
+    <ListItem 
+      title={'Course ' + index}
+      onPress={() => this.props.navigation.navigate('Details', { course: index })}
+      bottomDivider
+      chevron
+    />
+  )
   
   render() {
     const data = new Array(3).fill("Test")
@@ -28,7 +28,6 @@ export default class HomeScreen extends Component {
         <FlatList
           data={data}
           renderItem={this.renderItem}
-          contentContainerStyle={{padding: 10}}
           />
       </View>
     );

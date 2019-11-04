@@ -1,47 +1,43 @@
 // This is based on example code from 
 // https://aboutreact.com/react-native-view-pager/
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-
-import {IndicatorViewPager,  PagerDotIndicator} from 'rn-viewpager';
+import React from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import Icon from 'react-native-vector-icons/Entypo';
 
 import CameraScreen from './details_subscreens/CameraScreen';
 import RosterScreen from './details_subscreens/RosterScreen';
 import GraphScreen from './details_subscreens/GraphsScreen';
 import RemediationScreen from './details_subscreens/RemediationScreen';
 
+const TabNavigator = createBottomTabNavigator({
+  Camera: CameraScreen,
+  Roster: RosterScreen,
+  Graphs: GraphScreen,
+  Remediation: RemediationScreen,
+},
+{
+  defaultNavigationOptions:({ navigation }) => ({
+      tabBarIcon: ({focused, horizontal, tintColor}) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if(routeName === 'Camera') {
+          iconName = 'camera';
+        } else if(routeName === 'Roster') {
+          iconName = 'graduation-cap';
+        } else if(routeName === 'Graphs') {
+          iconName = 'line-graph';
+        } else if (routeName === 'Remediation') {
+          iconName = 'images';
+        }
 
-export default class DetailsScreen extends Component {
-  // Note: this.props.navigation.getParam('course', 'default course') has our course number
-
-  render() {
-    return (
-      <View style={{ flex: 1}}>
-        {/*Example of Dot Indicator*/}
-        <IndicatorViewPager
-          style={{ flex: 1 }}
-          indicator={this._renderDotIndicator()}
-          initialPage={1}>
-          {/*_renderDotIndicator() will return the PagerDotIndicator*/}
-          <View>          
-            <CameraScreen navigation={this.props.navigation}/>
-          </View>
-
-          <View>          
-            <RosterScreen navigation={this.props.navigation}/>
-          </View>
-          <View>          
-            <GraphScreen navigation={this.props.navigation}/>
-          </View>
-          <View>          
-            <RemediationScreen navigation={this.props.navigation}/>
-          </View>
-        </IndicatorViewPager>
-      </View>
-    );
+        return <Icon name={iconName} size ={25} color={tintColor} />
+      }
+    }
+  ),
+  tabBarOptions: {
+    activeTintColor: '#4d43e0',
   }
+});
 
-  _renderDotIndicator() {
-    return <PagerDotIndicator pageCount={4} />;
-  }
-}
+export default createAppContainer(TabNavigator);

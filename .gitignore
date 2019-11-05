@@ -1,5 +1,7 @@
 node_modules/**/*
 .expo/*
+# this should be excluded but for some reason isn't
+.expo/packager-info.json
 npm-debug.*
 *.jks
 *.p8
@@ -21,3 +23,4 @@ dist/
 node_modules/
 aws-exports.js
 awsconfiguration.json
+

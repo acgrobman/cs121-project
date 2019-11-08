@@ -106,30 +106,20 @@ const Settings_StackNavigator = createStackNavigator({
 });
 
 const CustomDrawerContentComponent = props => (
-  
-  <ScrollView contentContainerStyle={{justifyContent: 'space-between'}}>
     <SafeAreaView
-      style={styles.container}
+      style={{flex: 1}}
       forceInset={{ top: 'always', horizontal: 'never' }}
     >
-      <DrawerItems {...props} />
-    </SafeAreaView>
-    <SafeAreaView 
-      style={styles.container}
-      forceInset={{top: 'always', horizontal: 'never'}}
-    >
-      <Text style={{padding: 5}} onPress={()=>Linking.openURL('https://youtu.be/dQw4w9WgXcQ')}>
+      <ScrollView contentContainerStyle={{justifyContent: 'space-between'}}>
+        <DrawerItems {...props} />
+      </ScrollView>
+ 
+      <Text style={{padding: 20}} 
+            onPress={()=>Linking.openURL('https://youtu.be/dQw4w9WgXcQ')}>
         Made with ❤️ by The BlunderCatz
       </Text>
     </SafeAreaView>
-  </ScrollView>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 const DrawerNavigatorExample = createDrawerNavigator({
   //Drawer Optons and indexing

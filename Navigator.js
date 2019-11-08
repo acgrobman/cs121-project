@@ -138,7 +138,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Home',
-      drawerIcon: <Icon name='home' />
+      drawerIcon: <Icon name='home' size={20}/>
     },
   },
   AddCourseScreen: {
@@ -146,7 +146,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: AddCourse_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Add Course',
-      drawerIcon: <Icon name='plus' />
+      drawerIcon: <Icon name='plus' size={20}/>
     },
   },
   SettingsScreen: {
@@ -154,7 +154,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: Settings_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Settings',
-      drawerIcon: <Icon name='cog' />
+      drawerIcon: <Icon name='cog' size={20}/>
     },
   },
 }, {

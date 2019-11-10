@@ -2,9 +2,7 @@
 //https://aboutreact.com/react-native-navigation-drawer/
 
 import React, { Component } from 'react';
-//import react in our code.
 import { View, Text } from 'react-native';
-// import all basic components
 
 import { FlatList } from 'react-navigation'
 import { ListItem } from 'react-native-elements'

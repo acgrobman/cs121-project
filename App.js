@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, YellowBox } from "react-native"
 import Amplify from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react-native"
 import Navigator from "./Navigator"
@@ -23,5 +23,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center"
 	}
 });
+
+// Prevent warning caused by AWS Amplify analytics from displaying
+YellowBox.ignoreWarnings(['Unhandled Promise']);
 
 export default withAuthenticator(App, false);

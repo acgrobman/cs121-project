@@ -17,6 +17,8 @@ export default class HomeScreen extends Component {
     />
   )
   
+  keyExtractor = (item, index) => index.toString()
+
   render() {
     const data = new Array(3).fill("Test")
     //TODO: data needs to be somehow gotten to be the class lists
@@ -25,6 +27,7 @@ export default class HomeScreen extends Component {
         {(data && data.constructor === Array && data.length === 0) ? <Text> Add a course to get started</Text> : <Text></Text>}
         <FlatList
           data={data}
+          keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
           />
       </View>

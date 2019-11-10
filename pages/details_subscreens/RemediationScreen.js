@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { responsiveHeight, responsiveWidth} from 'react-native-responsive-dimensions';
+import { Icon } from 'react-native-elements'
 
 /** Screen for providing feedback to the facial recognition algorithm */
 export default class RemediationScreen extends Component {
@@ -18,6 +19,8 @@ export default class RemediationScreen extends Component {
             this.swiper = swiper
           }}
           onSwipedLeft={() => alert("Incorrect match")}
+          disableBottomSwipe={true}
+          disableTopSwipe={true}
         >
           <Card style={[styles.card, styles.card1]}>
             <Text style={styles.label}>A</Text>
@@ -42,34 +45,17 @@ export default class RemediationScreen extends Component {
     );
   }
 
+  /** Helper function for rendering footer button bar */
   _renderFooter() {
     return(
       <View style={styles.footer}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity 
-            style={[styles.button, styles.red]}
-            onPress={() => {this.swiper.swipeLeft();}}>
-              <Image 
-                source={require('./assets/red.png')}
-                resizeMode={'contain'}
-                style={{ height: 62, width: 62 }} />
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={[styles.button, styles.orange]} 
-            onPress={() => {this.swiper.goBackFromLeft();}}>
-              <Image 
-              source={require('./assets/back.png')} 
-              resizeMode={'contain'} 
-              style={{ height: 32, width: 32, borderRadius: 5 }} />
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={[styles.button, styles.green]}
-            onPress={() => {this.swiper.swipeRight();}}>
-              <Image 
-                source={require('./assets/green.png')} 
-                resizeMode={'contain'} 
-                style={{ height: 62, width: 62 }} />
-          </TouchableOpacity>
+          <Icon name='thumbs-down' type="entypo" size={30} color="red"         
+            onPress={() => {this.swiper.swipeLeft();}} reverse raised/>
+          <Icon name='cw' size={30} type="entypo" color="orange"
+            onPress={() => {this.swiper.goBackFromLeft();}} reverse raised/>
+          <Icon name='thumbs-up' size={30} type="entypo" color="green"
+            onPress={() => {this.swiper.swipeRight();}} reverse raised/>
         </View>
       </View>
     );
@@ -95,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   card:{
-    height: responsiveHeight(50),
+    height: responsiveHeight(53),
     width: responsiveWidth(95),
     backgroundColor: '#FE474C',
     borderRadius: 5,
@@ -130,40 +116,4 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent: 'space-between',
   },
-  button:{
-    shadowColor: 'rgba(0,0,0,0.3)',
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    shadowOpacity:0.5,
-    backgroundColor:'#fff',
-    alignItems:'center',
-    justifyContent:'center',
-    zIndex: 0,
-  },
-  orange:{
-    width:55,
-    height:55,
-    borderWidth:6,
-    borderColor:'rgb(246,190,66)',
-    borderRadius:55,
-    marginTop:-15
-  },
-  green:{
-    width:75,
-    height:75,
-    backgroundColor:'#fff',
-    borderRadius:75,
-    borderWidth:6,
-    borderColor:'#01df8a',
-  },
-  red:{
-    width:75,
-    height:75,
-    backgroundColor:'#fff',
-    borderRadius:75,
-    borderWidth:6,
-    borderColor:'#fd267d',
-  }
 });

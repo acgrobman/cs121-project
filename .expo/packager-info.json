@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
+  "devToolsPort": 19003,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 16612,
-  "expoServerNgrokUrl": "https://su-dua.anonymous.cs121-project.exp.direct",
-  "packagerNgrokUrl": "https://packager.su-dua.anonymous.cs121-project.exp.direct",
-  "ngrokPid": 14480
+  "packagerPort": 19004,
+  "packagerPid": 2796,
+  "expoServerNgrokUrl": "https://xb-vnz.anonymous.cs121-project.exp.direct",
+  "packagerNgrokUrl": "https://packager.xb-vnz.anonymous.cs121-project.exp.direct",
+  "ngrokPid": 14568
 }

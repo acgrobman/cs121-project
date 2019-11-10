@@ -106,30 +106,20 @@ const Settings_StackNavigator = createStackNavigator({
 });
 
 const CustomDrawerContentComponent = props => (
-  
-  <ScrollView contentContainerStyle={{justifyContent: 'space-between'}}>
     <SafeAreaView
-      style={styles.container}
+      style={{flex: 1}}
       forceInset={{ top: 'always', horizontal: 'never' }}
     >
-      <DrawerItems {...props} />
-    </SafeAreaView>
-    <SafeAreaView 
-      style={styles.container}
-      forceInset={{top: 'always', horizontal: 'never'}}
-    >
-      <Text style={{padding: 5}} onPress={()=>Linking.openURL('https://youtu.be/dQw4w9WgXcQ')}>
+      <ScrollView contentContainerStyle={{justifyContent: 'space-between'}}>
+        <DrawerItems {...props} />
+      </ScrollView>
+ 
+      <Text style={{padding: 20}} 
+            onPress={()=>Linking.openURL('https://youtu.be/dQw4w9WgXcQ')}>
         Made with ❤️ by The BlunderCatz
       </Text>
     </SafeAreaView>
-  </ScrollView>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 const DrawerNavigatorExample = createDrawerNavigator({
   //Drawer Optons and indexing
@@ -138,7 +128,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Home',
-      drawerIcon: <Icon name='home' />
+      drawerIcon: <Icon name='home' size={20}/>
     },
   },
   AddCourseScreen: {
@@ -146,7 +136,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: AddCourse_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Add Course',
-      drawerIcon: <Icon name='plus' />
+      drawerIcon: <Icon name='plus' size={20}/>
     },
   },
   SettingsScreen: {
@@ -154,7 +144,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     screen: Settings_StackNavigator,
     navigationOptions: {
       drawerLabel: 'Settings',
-      drawerIcon: <Icon name='cog' />
+      drawerIcon: <Icon name='cog' size={20}/>
     },
   },
 }, {

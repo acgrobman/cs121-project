@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 // Prevent warning caused by AWS Amplify analytics from displaying
 YellowBox.ignoreWarnings(['Unhandled Promise']);
 
-export default withAuthenticator(App, false);
+export default withAuthenticator(App, {includeGreetings: false, usernameAttributes: 'email'}, [], null, MyTheme, {});
 
 //Does neither
 /*export default withAuthenticator(App, {

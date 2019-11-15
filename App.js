@@ -1,6 +1,6 @@
 import React from "react"
-import { ThemeProvider } from 'styled-components'
-import { StyleSheet, YellowBox } from "react-native"
+import { ThemeProvider } from "react-native-elements"
+import { YellowBox } from "react-native"
 import Amplify from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react-native"
 import Navigator from "./Navigator"
@@ -18,15 +18,6 @@ class App extends React.Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center"
-	}
-});
 
 // Prevent warning caused by AWS Amplify analytics from displaying
 YellowBox.ignoreWarnings(['Unhandled Promise']);

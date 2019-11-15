@@ -1,0 +1,7 @@
+{
+    "tableName": "attendanceRecords",
+    "partitionKeyName": "id",
+    "partitionKeyType": "S",
+    "sortKeyName": "studentId",
+    "sortKeyType": "S"
+}

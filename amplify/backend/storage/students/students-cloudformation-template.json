@@ -12,6 +12,13 @@
             "Type": "String"
         },
         
+        "sortKeyName": {
+            "Type": "String"
+        },
+        "sortKeyType": {
+            "Type": "String"
+        },
+        
         "tableName": {
             "Type": "String"
         }
@@ -33,7 +40,12 @@
                 "AttributeDefinitions": [
                   
                   {
-                      "AttributeName": "schoolId",
+                      "AttributeName": "id",
+                      "AttributeType": "S"
+                  }  , 
+                  
+                  {
+                      "AttributeName": "courseId",
                       "AttributeType": "S"
                   } 
                   
@@ -41,8 +53,13 @@
                 "KeySchema": [
                   
                   {
-                    "AttributeName": "schoolId",
+                    "AttributeName": "id",
                     "KeyType": "HASH"
+                  }  , 
+                  
+                  {
+                    "AttributeName": "courseId",
+                    "KeyType": "RANGE"
                   } 
                   
                 ],
@@ -110,6 +127,17 @@
         "PartitionKeyType": {
             "Value": {
                 "Ref": "partitionKeyType"
+            }
+        },
+        
+        "SortKeyName": {
+            "Value": {
+                "Ref": "sortKeyName"
+            }
+        },
+        "SortKeyType": {
+            "Value": {
+                "Ref": "sortKeyType"
             }
         },
         

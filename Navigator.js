@@ -62,7 +62,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
   Details: {
     screen: DetailsScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Course Details',
+      title: 'Course Details'
       //headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
     }),
   },

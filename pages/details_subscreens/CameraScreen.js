@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { ScreenOrientation } from 'expo';
+import { Camera } from 'expo-camera';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Card, Button } from 'react-native-elements'
 
 export default class CameraScreen extends Component {
+
+    state = {
+        type: Camera.Constants.Type.back,
+    }
+
+    snap = async () => {
+        if (this.camera) {
+            let photo = await this.camera.takePictureAsync();
+            console.log(photo)
+        }
+    };
+
     render () {
         return (
-            <View
-            style={{
-              backgroundColor: 'red',
-              flex: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              {/*this is less than ideal, i'm trying to do box-in-box, hopefully when we have the styled components that will help*/}
-              <View style = {{
-                backgroundColor: 'goldenrod',
-                padding: 10,
-                margin: 10,
-                flex: 97,
-                width: 300
-              }}>
-                <Text style={{ color: 'white', fontSize: 30 }}>
-                  Camera 
-                  {JSON.stringify(this.props.navigation.getParam('course', 'default course'))}
-               </Text>
-              </View>
-          </View>
+            <Card title="Take Attendance" containerStyle={{ flex: 1 }}>
+                <Button onPress={this.snap} title="Capture" />
+                <Camera style={{ height: '100%', width: '100%' }} type={this.state.type} ref={ref => { this.camera = ref; }} />
+            </Card>
         );
     }
 }

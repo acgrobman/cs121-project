@@ -2,7 +2,7 @@ import React from "react"
 import * as Permissions from 'expo-permissions';
 import { View, Text, YellowBox } from "react-native"
 import Amplify from "aws-amplify"
-import { withAuthenticator } from "aws-amplify-react-native"
+import { withAuthenticator, AmplifyTheme } from "aws-amplify-react-native"
 import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import Navigator from "./Navigator"
 import config from "./aws-exports"

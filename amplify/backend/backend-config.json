@@ -7,14 +7,14 @@
 		}
 	},
 	"function": {
-		"schoolsTrigger325e0e5d": {
+		"coursesTriggerb0cc9d77": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true,
 			"dependsOn": [
 				{
 					"category": "storage",
-					"resourceName": "schools",
+					"resourceName": "courses",
 					"attributes": [
 						"Name",
 						"Arn",
@@ -23,14 +23,30 @@
 				}
 			]
 		},
-		"teachersTriggerb8036be4": {
+		"studentsTriggerded69210": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true,
 			"dependsOn": [
 				{
 					"category": "storage",
-					"resourceName": "teachers",
+					"resourceName": "students",
+					"attributes": [
+						"Name",
+						"Arn",
+						"StreamArn"
+					]
+				}
+			]
+		},
+		"attendanceRecordsTrigger942f3028": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "attendanceRecords",
 					"attributes": [
 						"Name",
 						"Arn",
@@ -41,11 +57,19 @@
 		}
 	},
 	"storage": {
-		"schools": {
+		"presensedb": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
 		},
-		"teachers": {
+		"courses": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		},
+		"students": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		},
+		"attendanceRecords": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
 		}

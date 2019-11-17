@@ -36,4 +36,4 @@ class App extends React.Component {
 // Prevent warning caused by AWS Amplify analytics from displaying
 YellowBox.ignoreWarnings(['Unhandled Promise']);
 
-export default App;//withAuthenticator(App, false);
+export default withAuthenticator(App, false);

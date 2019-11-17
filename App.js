@@ -2,11 +2,24 @@ import React from "react"
 import * as Permissions from 'expo-permissions';
 import { View, Text, YellowBox } from "react-native"
 import Amplify from "aws-amplify"
-import { withAuthenticator } from "aws-amplify-react-native"
+import { withAuthenticator, AmplifyTheme } from "aws-amplify-react-native"
+import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import Navigator from "./Navigator"
 import config from "./aws-exports"
 
+const MyButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#65bf90' });
+const MyTheme = Object.assign({}, AmplifyTheme, { button: MyButton });
+
 Amplify.configure(config);
+
+export const client = new AWSAppSyncClient({
+	url: config.aws_appsync_graphqlEndpoint,
+	region: config.aws_appsync_region,
+	auth: {
+		type: AUTH_TYPE.API_KEY,
+		apiKey: config.aws_appsync_apiKey,
+	}
+});
 
 class App extends React.Component {
 	state = {
@@ -34,6 +47,6 @@ class App extends React.Component {
 }
 
 // Prevent warning caused by AWS Amplify analytics from displaying
-YellowBox.ignoreWarnings(['Unhandled Promise']);
+YellowBox.ignoreWarnings(['Unhandled Promise', 'RNCNetInfo', 'Require cycle', 'Failed prop type']);
 
-export default withAuthenticator(App, false);
+export default withAuthenticator(App, {includeGreetings: false, usernameAttributes: 'email'}, [], null, MyTheme, {});

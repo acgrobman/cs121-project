@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import gql from 'graphql-tag';
 import { View} from 'react-native';
 import { FlatList } from 'react-navigation'
 import { ListItem, Overlay, Button, Text, Input } from 'react-native-elements'
+import { client } from '../../App';
+import { getStudentsByCourseId } from '../../src/graphql/queries'
 import Icon from 'react-native-vector-icons/Entypo'
 
 class PlusSign extends Component {
@@ -27,7 +30,7 @@ export default class RosterScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {isOverlayVisible: false, newStudentName: ""};
+    this.state = {isOverlayVisible: false, newStudentName: "", students: []};
 
     this._startAddStudent = this._startAddStudent.bind(this);
     this._endAddStudent = this._endAddStudent.bind(this);
@@ -37,27 +40,41 @@ export default class RosterScreen extends Component {
   renderItem = ({ item }) => (
     <ListItem
       title={item.name}
-      subtitle={item.subtitle}
-      leftAvatar={{ source: { uri: item.avatar_url } }}
+      leftAvatar={{ source: { uri: item.picture } }}
       onPress={() => alert('student details not yet implemented')}
       bottomDivider
       chevron
     />
   )
 
+  componentWillMount() {
+    this.fetchRoster(this.props.navigation.state.params.courseId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const courseId = this.props.navigation.state.params.courseId;
+    if (courseId != prevProps.navigation.state.params.courseId) {
+      this.fetchRoster(courseId);
+    }
+  }
+
+  fetchRoster(id) {
+    client.query({
+      query: gql(getStudentsByCourseId),
+      variables: {
+        courseId: id
+      }
+    }).then((data) => {
+      this.setState({
+        students: data.data.getStudentsByCourseId.map(({id, name, picture}) => ({id, name, picture}))
+      });
+    }).catch((e) => {
+      console.log(e);
+    });
+  }
+
     
   keyExtractor = (item, index) => index.toString()
-
-  list = [
-    {
-      name: 'Amy Farha',
-      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    },
-    {
-      name: 'Chris Jackson',
-      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    },
-  ]
   
   _startAddStudent() {
     this.setState({isOverlayVisible: true});
@@ -65,10 +82,10 @@ export default class RosterScreen extends Component {
   
   _endAddStudent() {
     this.setState({isOverlayVisible: false});
-    this.list.push({
-      name: this.state.newStudentName,
-      avatar_url: 'https://vignette.wikia.nocookie.net/spongebob/images/d/d7/SpongeBob_stock_art.png/revision/latest?cb=20190921125147',
-    })
+    //this.list.push({
+    //  name: this.state.newStudentName,
+    //  avatar_url: 'https://vignette.wikia.nocookie.net/spongebob/images/d/d7/SpongeBob_stock_art.png/revision/latest?cb=20190921125147',
+    // })
   }
 
   _handleName = (name) => {
@@ -76,12 +93,13 @@ export default class RosterScreen extends Component {
   }
 
   render () {
+
     return (
       <View>
         <Button title="Add Student" onPress={this._startAddStudent}/>
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={this.list}
+          data={this.state.students}
           renderItem={this.renderItem}
         />
         <Overlay isVisible={this.state.isOverlayVisible}>

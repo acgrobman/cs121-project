@@ -2,33 +2,63 @@
 //https://aboutreact.com/react-native-navigation-drawer/
 
 import React, { Component } from 'react';
+import { Auth } from 'aws-amplify';
 import { View, Text } from 'react-native';
+import gql from 'graphql-tag';
+import { FlatList } from 'react-navigation';
+import { ListItem } from 'react-native-elements';
+import { getCoursesByTeacherId } from '../src/graphql/queries';
+import { client } from '../App';
 
-import { FlatList } from 'react-navigation'
-import { ListItem } from 'react-native-elements'
+
  
 export default class HomeScreen extends Component {
-  renderItem = ({ index }) => (
+
+  state = {
+    courses: []
+  }
+
+  componentWillMount() {
+    Auth.currentAuthenticatedUser().then(user => {
+      client.query({
+        query: gql(getCoursesByTeacherId),
+        variables: {
+          teacherId: user.username
+        }
+      }).then((data) => {
+        this.setState({
+          courses: data.data.getCoursesByTeacherId.map(({id, name}) => ({id, name}))
+        });
+      }).catch((e) => {
+        console.log(e);
+      });
+    });
+    
+  }
+
+  renderItem = ({ item }) => (
     <ListItem 
-      title={'Course ' + index}
-      onPress={() => this.props.navigation.navigate('Details', { course: index })}
+      title={item.name}
+      onPress={() => this.props.navigation.navigate('Details', { courseId: item.id })}
       bottomDivider
       chevron
     />
   )
-  
+
   keyExtractor = (item, index) => index.toString()
 
   render() {
-    const data = new Array(3).fill("Test")
-    //TODO: data needs to be somehow gotten to be the class lists
+    const { courses } = this.state;
+
+    console.log(this.props);
+
     return (
       <View>
-        {(data && data.constructor === Array && data.length === 0) ? <Text> Add a course to get started</Text> : <Text></Text>}
+        {(courses && courses.length === 0) ? <Text> Add a course to get started</Text> : <Text></Text>}
         <FlatList
-          data={data}
-          keyExtractor={this.keyExtractor}
+          data={courses}
           renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
           />
       </View>
     );

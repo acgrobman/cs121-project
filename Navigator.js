@@ -1,7 +1,7 @@
 // Tutorial code from https://aboutreact.com/react-native-navigation-drawer/
 import React, { Component } from 'react';
 //import react in our code.
-import { View, Image, TouchableOpacity, StyleSheet, Text, Linking } from 'react-native';
+import { View, Text, Linking } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { DrawerItems } from 'react-navigation-drawer';
 import { ScrollView } from 'react-navigation'
@@ -34,16 +34,10 @@ class NavigationDrawerStructure extends Component {
 
 // Component for adding a course from HomeScreen
 class NavBarPlusSign extends Component {
-  
-  // Dummy on press function that currently does nothing
-  addCourse = () => {
-    alert('Feature not implemented');
-  }
-
   render() {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <Icon name='plus' color='white' size={30} onPress={this.addCourse.bind(this)} />
+        <Icon name='plus' color='white' size={30} onPress={() => this.props.navigationProps.navigate("AddCourse")} />
       </View>
     );
   }
@@ -62,8 +56,13 @@ const FirstActivity_StackNavigator = createStackNavigator({
   Details: {
     screen: DetailsScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Course Details'
-      //headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      title: 'Course Details',
+    }),
+  },
+  AddCourse: {
+    screen: AddCourseScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Add a Course',
     }),
   },
 },{
@@ -80,7 +79,7 @@ const AddCourse_StackNavigator = createStackNavigator({
   Second: {
     screen: AddCourseScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Add Course',
+      title: 'Add a Course',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#FF9800',

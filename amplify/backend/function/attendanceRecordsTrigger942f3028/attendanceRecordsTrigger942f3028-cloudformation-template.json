@@ -72,7 +72,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "attendance-dev-20191014162407-deployment",
-					"S3Key": "amplify-builds/attendanceRecordsTrigger942f3028-6836544737587754554b-build.zip"
+					"S3Key": "amplify-builds/attendanceRecordsTrigger942f3028-6e4b7a30386e6d597775-build.zip"
 				}
 			}
 		},

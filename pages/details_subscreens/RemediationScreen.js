@@ -9,6 +9,7 @@ import { Icon } from 'react-native-elements'
 
 /** Screen for providing feedback to the facial recognition algorithm */
 export default class RemediationScreen extends Component {
+
   render() {
     return (
       <View style={{ flex: 1 }}>

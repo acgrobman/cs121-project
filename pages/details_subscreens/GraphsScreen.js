@@ -7,7 +7,7 @@ import Graph3 from './graphs/Graph3';
 
 /** Screen component for page containing all graphs */
 export default class GraphScreen extends Component {
-  
+
   /** Renders the page */
   render() {
     return (

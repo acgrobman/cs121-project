@@ -7,6 +7,9 @@ import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import Navigator from "./Navigator"
 import config from "./aws-exports"
 
+const MyButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#65bf90' });
+const MyTheme = Object.assign({}, AmplifyTheme, { button: MyButton });
+
 Amplify.configure(config);
 
 export const client = new AWSAppSyncClient({
@@ -38,7 +41,7 @@ class App extends React.Component {
 		}
 
 		return (
-			<Navigator client={client} />
+			<Navigator />
 		);
 	}
 }
@@ -46,4 +49,4 @@ class App extends React.Component {
 // Prevent warning caused by AWS Amplify analytics from displaying
 YellowBox.ignoreWarnings(['Unhandled Promise', 'RNCNetInfo', 'Require cycle', 'Failed prop type']);
 
-export default withAuthenticator(App, false);
+export default withAuthenticator(App, {includeGreetings: false, usernameAttributes: 'email'}, [], null, MyTheme, {});

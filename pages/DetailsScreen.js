@@ -49,6 +49,7 @@ const AndroidTabNavigator = createMaterialBottomTabNavigator({
   Remediation: RemediationScreen,
 },
 {
+  initialRouteName: 'Roster',
   defaultNavigationOptions:({ navigation }) => ({
       tabBarIcon: ({focused, horizontal, tintColor}) => {
         const { routeName } = navigation.state;

@@ -1,30 +1,59 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Camera } from 'expo-camera';
+import { View, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements'
+import { withNavigationFocus } from 'react-navigation'
 
-export default class CameraScreen extends Component {
+class CameraScreen extends Component {
+
+    state = {
+        type: Camera.Constants.Type.back
+    }
+
+    snap = async () => {
+        if (this.camera) {
+            let photo = await this.camera.takePictureAsync();
+        }
+    };
+
     render () {
+
+        const { isFocused } = this.props;
+
+        if (!isFocused) return null;
+
+
         return (
-            <View
-            style={{
-              backgroundColor: 'red',
-              flex: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              {/*this is less than ideal, i'm trying to do box-in-box, hopefully when we have the styled components that will help*/}
-              <View style = {{
-                backgroundColor: 'goldenrod',
-                padding: 10,
-                margin: 10,
-                flex: 97,
-                width: 300
-              }}>
-                <Text style={{ color: 'white', fontSize: 30 }}>
-                  Camera 
-                  {JSON.stringify(this.props.navigation.getParam('course', 'default course'))}
-               </Text>
-              </View>
-          </View>
+            <View style={{ flex: 1 }}>
+                <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref; }} >
+                    <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: 'transparent',
+                        flexDirection: 'row',
+                    }}>
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                alignSelf: 'flex-end',
+                                alignItems: 'center',
+                                marginBottom: 25
+                            }}
+                            onPress={() => this.snap()}>
+                            <Icon
+                                name='ios-radio-button-off'
+                                type='ionicon'
+                                color='white'
+                                size={75}
+                                
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </Camera>
+            </View>
         );
     }
 }
+
+
+export default withNavigationFocus(CameraScreen);

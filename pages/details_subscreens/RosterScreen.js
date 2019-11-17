@@ -4,6 +4,7 @@ import { FlatList } from 'react-navigation'
 import { ListItem } from 'react-native-elements'
 
 export default class RosterScreen extends Component {
+
   renderItem = ({ item }) => (
     <ListItem
       title={item.name}

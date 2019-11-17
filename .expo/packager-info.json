@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": null,
-  "packagerPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 18900,
   "expoServerNgrokUrl": "https://su-dua.novaplasm.attendancejs.exp.direct",
   "packagerNgrokUrl": "https://packager.su-dua.novaplasm.attendancejs.exp.direct",
-  "ngrokPid": 21148
+  "ngrokPid": 25060
 }

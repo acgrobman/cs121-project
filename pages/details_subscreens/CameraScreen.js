@@ -1,28 +1,59 @@
 import React, { Component } from 'react';
-import { ScreenOrientation } from 'expo';
 import { Camera } from 'expo-camera';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Card, Button } from 'react-native-elements'
+import { View, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements'
+import { withNavigationFocus } from 'react-navigation'
 
-export default class CameraScreen extends Component {
+class CameraScreen extends Component {
 
     state = {
-        type: Camera.Constants.Type.back,
+        type: Camera.Constants.Type.back
     }
 
     snap = async () => {
         if (this.camera) {
             let photo = await this.camera.takePictureAsync();
-            console.log(photo)
         }
     };
 
     render () {
+
+        const { isFocused } = this.props;
+
+        if (!isFocused) return null;
+
+
         return (
-            <Card title="Take Attendance" containerStyle={{ flex: 1 }}>
-                <Button onPress={this.snap} title="Capture" />
-                <Camera style={{ height: '100%', width: '100%' }} type={this.state.type} ref={ref => { this.camera = ref; }} />
-            </Card>
+            <View style={{ flex: 1 }}>
+                <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref; }} >
+                    <View
+                    style={{
+                        flex: 1,
+                        backgroundColor: 'transparent',
+                        flexDirection: 'row',
+                    }}>
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                alignSelf: 'flex-end',
+                                alignItems: 'center',
+                                marginBottom: 25
+                            }}
+                            onPress={() => this.snap()}>
+                            <Icon
+                                name='ios-radio-button-off'
+                                type='ionicon'
+                                color='white'
+                                size={75}
+                                
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </Camera>
+            </View>
         );
     }
 }
+
+
+export default withNavigationFocus(CameraScreen);

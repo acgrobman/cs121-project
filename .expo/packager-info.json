@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19004,
-  "packagerPid": 2796,
-  "expoServerNgrokUrl": "https://xb-vnz.anonymous.cs121-project.exp.direct",
-  "packagerNgrokUrl": "https://packager.xb-vnz.anonymous.cs121-project.exp.direct",
-  "ngrokPid": 14568
+  "packagerPort": 19001,
+  "packagerPid": 18900,
+  "expoServerNgrokUrl": "https://su-dua.novaplasm.attendancejs.exp.direct",
+  "packagerNgrokUrl": "https://packager.su-dua.novaplasm.attendancejs.exp.direct",
+  "ngrokPid": 25060
 }

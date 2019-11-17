@@ -5,20 +5,12 @@ import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 import { View, Text } from 'react-native';
 import gql from 'graphql-tag';
-import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
-import { FlatList } from 'react-navigation'
-import { ListItem } from 'react-native-elements'
-import config from "../aws-exports"
-import { getCoursesByTeacherId } from '../src/graphql/queries'
+import { FlatList } from 'react-navigation';
+import { ListItem } from 'react-native-elements';
+import { getCoursesByTeacherId } from '../src/graphql/queries';
+import { client } from '../App';
 
-const client = new AWSAppSyncClient({
-  url: config.aws_appsync_graphqlEndpoint,
-  region: config.aws_appsync_region,
-  auth: {
-    type: AUTH_TYPE.API_KEY,
-    apiKey: config.aws_appsync_apiKey,
-  }
-});
+
  
 export default class HomeScreen extends Component {
 
@@ -57,6 +49,8 @@ export default class HomeScreen extends Component {
 
   render() {
     const { courses } = this.state;
+
+    console.log(this.props);
 
     return (
       <View>

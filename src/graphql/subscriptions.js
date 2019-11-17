@@ -91,15 +91,21 @@ export const onDeleteCourse = `subscription OnDeleteCourse(
 export const onCreateStudent = `subscription OnCreateStudent(
   $courseId: String
   $id: String
+  $name: String
+  $picture: String
   $attendanceRecords: [String]
 ) {
   onCreateStudent(
     courseId: $courseId
     id: $id
+    name: $name
+    picture: $picture
     attendanceRecords: $attendanceRecords
   ) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }
@@ -107,15 +113,21 @@ export const onCreateStudent = `subscription OnCreateStudent(
 export const onUpdateStudent = `subscription OnUpdateStudent(
   $courseId: String
   $id: String
+  $name: String
+  $picture: String
   $attendanceRecords: [String]
 ) {
   onUpdateStudent(
     courseId: $courseId
     id: $id
+    name: $name
+    picture: $picture
     attendanceRecords: $attendanceRecords
   ) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }
@@ -123,15 +135,21 @@ export const onUpdateStudent = `subscription OnUpdateStudent(
 export const onDeleteStudent = `subscription OnDeleteStudent(
   $courseId: String
   $id: String
+  $name: String
+  $picture: String
   $attendanceRecords: [String]
 ) {
   onDeleteStudent(
     courseId: $courseId
     id: $id
+    name: $name
+    picture: $picture
     attendanceRecords: $attendanceRecords
   ) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }

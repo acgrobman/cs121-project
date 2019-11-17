@@ -56,6 +56,8 @@ export const createStudent = `mutation CreateStudent($input: CreateStudentInput!
   createStudent(input: $input) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }
@@ -64,6 +66,8 @@ export const updateStudent = `mutation UpdateStudent($input: UpdateStudentInput!
   updateStudent(input: $input) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }
@@ -72,6 +76,8 @@ export const deleteStudent = `mutation DeleteStudent($input: DeleteStudentInput!
   deleteStudent(input: $input) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }

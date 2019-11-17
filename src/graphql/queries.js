@@ -63,6 +63,8 @@ export const getStudent = `query GetStudent($id: String!, $courseId: String!) {
   getStudent(id: $id, courseId: $courseId) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }
@@ -71,6 +73,8 @@ export const getStudentsByCourseId = `query GetStudentsByCourseId($courseId: Str
   getStudentsByCourseId(courseId: $courseId) {
     courseId
     id
+    name
+    picture
     attendanceRecords
   }
 }
@@ -84,6 +88,8 @@ export const listStudents = `query ListStudents(
     items {
       courseId
       id
+      name
+      picture
       attendanceRecords
     }
     nextToken

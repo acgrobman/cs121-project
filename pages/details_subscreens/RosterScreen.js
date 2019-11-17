@@ -1,20 +1,51 @@
 import React, { Component } from 'react';
-import { View, Text} from 'react-native';
+import gql from 'graphql-tag';
 import { FlatList } from 'react-navigation'
 import { ListItem } from 'react-native-elements'
+import { client } from '../../App';
+import { getStudentsByCourseId } from '../../src/graphql/queries'
 
 export default class RosterScreen extends Component {
+
+  state = {
+    students: []
+  }
 
   renderItem = ({ item }) => (
     <ListItem
       title={item.name}
-      subtitle={item.subtitle}
-      leftAvatar={{ source: { uri: item.avatar_url } }}
+      leftAvatar={{ source: { uri: item.picture } }}
       onPress={() => alert('student details not yet implemented')}
       bottomDivider
       chevron
     />
   )
+
+  componentWillMount() {
+    this.fetchRoster(this.props.navigation.state.params.courseId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const courseId = this.props.navigation.state.params.courseId;
+    if (courseId != prevProps.navigation.state.params.courseId) {
+      this.fetchRoster(courseId);
+    }
+  }
+
+  fetchRoster(id) {
+    client.query({
+      query: gql(getStudentsByCourseId),
+      variables: {
+        courseId: id
+      }
+    }).then((data) => {
+      this.setState({
+        students: data.data.getStudentsByCourseId.map(({id, name, picture}) => ({id, name, picture}))
+      });
+    }).catch((e) => {
+      console.log(e);
+    });
+  }
 
     
   keyExtractor = (item, index) => index.toString()
@@ -34,13 +65,11 @@ export default class RosterScreen extends Component {
   
   
   render () {
-    console.log('hi');
-    console.log(this.props.navigation.state.params);
 
     return (
       <FlatList
         keyExtractor={this.keyExtractor}
-        data={this.list}
+        data={this.state.students}
         renderItem={this.renderItem}
       />
     )

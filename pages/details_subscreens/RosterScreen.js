@@ -34,6 +34,9 @@ export default class RosterScreen extends Component {
   
   
   render () {
+    console.log('hi');
+    console.log(this.props.navigation.state.params);
+
     return (
       <FlatList
         keyExtractor={this.keyExtractor}

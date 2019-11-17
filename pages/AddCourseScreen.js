@@ -35,6 +35,10 @@ export default class AddCourseScreen extends Component {
   /** Processes submission of the add course form */
   _processSubmit() {
     console.log(this.state);
+    // Goes back if navigated from plus button, necessary to pop off stack
+    this.props.navigation.goBack();
+    // Goes back if navigated from drawer
+    this.props.navigation.navigate("Home")
   }
 
   /** Renders the display elements */

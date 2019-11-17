@@ -19,6 +19,7 @@ const TabNavigator = createBottomTabNavigator({
   Remediation: RemediationScreen,
 },
 {
+  initialRouteName: 'Roster',
   defaultNavigationOptions:({ navigation }) => ({
       tabBarIcon: ({focused, horizontal, tintColor}) => {
         const { routeName } = navigation.state;

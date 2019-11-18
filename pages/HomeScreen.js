@@ -2,6 +2,7 @@
 //https://aboutreact.com/react-native-navigation-drawer/
 
 import React, { Component } from 'react';
+import { RefreshControl } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { View, Text } from 'react-native';
 import gql from 'graphql-tag';
@@ -15,17 +16,24 @@ import { client } from '../App';
 export default class HomeScreen extends Component {
 
   state = {
-    courses: []
+    courses: [],
+    refreshing: false
   }
 
   componentWillMount() {
+    this.fetchCourses();
+  }
+
+  fetchCourses(cache = "cache-first") {
     Auth.currentAuthenticatedUser().then(user => {
       client.query({
         query: gql(getCoursesByTeacherId),
         variables: {
           teacherId: user.username
-        }
+        },
+        fetchPolicy: cache
       }).then((data) => {
+        console.log('polling',cache,data.data.getCoursesByTeacherId)
         this.setState({
           courses: data.data.getCoursesByTeacherId.map(({id, name}) => ({id, name}))
         });
@@ -33,7 +41,6 @@ export default class HomeScreen extends Component {
         console.log(e);
       });
     });
-    
   }
 
   renderItem = ({ item }) => (
@@ -57,6 +64,12 @@ export default class HomeScreen extends Component {
           data={courses}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={() => this.fetchCourses("network-only")}
+            />
+          }
           />
       </View>
     );

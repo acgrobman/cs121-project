@@ -50,8 +50,6 @@ export default class HomeScreen extends Component {
   render() {
     const { courses } = this.state;
 
-    console.log(this.props);
-
     return (
       <View>
         {(courses && courses.length === 0) ? <Text> Add a course to get started</Text> : <Text></Text>}

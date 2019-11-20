@@ -5,6 +5,7 @@ import { FlatList } from 'react-navigation'
 import { ListItem, Overlay, Button, Text, Input } from 'react-native-elements'
 import { client } from '../../App';
 import { getStudentsByCourseId } from '../../src/graphql/queries'
+import { createStudent } from '../../src/graphql/mutations'
 import Icon from 'react-native-vector-icons/Entypo'
 
 class PlusSign extends Component {
@@ -79,13 +80,32 @@ export default class RosterScreen extends Component {
   _startAddStudent() {
     this.setState({isOverlayVisible: true});
   }
-  
+
+   /** Generate course id, borrowed from https://www.w3resource.com/javascript-exercises/javascript-function-exercise-20.php */
+   _generateId() {
+    var text = "";
+    var char_list = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for(var i=0; i < 64; i++ ) {  
+      text += char_list.charAt(Math.floor(Math.random() * char_list.length));
+    }
+    return text;
+  }
   _endAddStudent() {
     this.setState({isOverlayVisible: false});
-    //this.list.push({
-    //  name: this.state.newStudentName,
-    //  avatar_url: 'https://vignette.wikia.nocookie.net/spongebob/images/d/d7/SpongeBob_stock_art.png/revision/latest?cb=20190921125147',
-    // })
+    const courseId = this.props.navigation.state.params.courseId;
+    generatedId = this._generateId();
+    client.mutate({
+      mutation: gql(createStudent),
+      variables: {
+        input: {
+          courseId: courseId,
+          id: generatedId,
+          name: this.state.newStudentName,
+          picture: 'http://www.cartoonbucket.com/wp-content/uploads/2015/08/Spongebob-Running.jpg',
+          attendanceRecords: [],
+        },
+      }
+    });
   }
 
   _handleName = (name) => {
@@ -102,7 +122,7 @@ export default class RosterScreen extends Component {
           data={this.state.students}
           renderItem={this.renderItem}
         />
-        <Overlay isVisible={this.state.isOverlayVisible}>
+        <Overlay isVisible={this.state.isOverlayVisible}  onBackdropPress={() => this.setState({ isOverlayVisible: false })}>
           <Text h2>Add a Student</Text>
           <View style={{flex: 1, flexDirection: "column",justifyContent:"space-between"}}>
           <View>

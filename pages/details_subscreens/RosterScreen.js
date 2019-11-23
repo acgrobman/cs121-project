@@ -6,6 +6,7 @@ import { ListItem, Overlay, Button, Text, Input } from 'react-native-elements'
 import { client } from '../../App';
 import { getStudentsByCourseId } from '../../src/graphql/queries'
 import Icon from 'react-native-vector-icons/Entypo'
+import * as DocumentPicker from 'expo-document-picker'
 
 class PlusSign extends Component {
   _addStudent() {
@@ -35,6 +36,7 @@ export default class RosterScreen extends Component {
     this._startAddStudent = this._startAddStudent.bind(this);
     this._endAddStudent = this._endAddStudent.bind(this);
     this._handleName = this._handleName.bind(this);
+    this._uploadRoster = this._uploadRoster.bind(this);
   }
 
   renderItem = ({ item }) => (
@@ -92,11 +94,21 @@ export default class RosterScreen extends Component {
     this.setState({newStudentName: name})
   }
 
+  /** Event listener for user's to upload a course roster */
+  _uploadRoster() {
+    DocumentPicker.getDocumentAsync({type: 'text/csv'}).then( (res) =>{
+      if (res.type === 'success'){
+
+      }
+    }).catch();
+  }
+
   render () {
 
     return (
       <View>
-        <Button title="Add Student" onPress={this._startAddStudent}/>
+        <Button title="Add Student" onPress={this._startAddStudent} />
+        <Button title="Import Roster" onPress={this._uploadRoster}/>
         <FlatList
           keyExtractor={this.keyExtractor}
           data={this.state.students}

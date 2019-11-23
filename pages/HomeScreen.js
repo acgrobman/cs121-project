@@ -33,7 +33,6 @@ export default class HomeScreen extends Component {
         },
         fetchPolicy: cache
       }).then((data) => {
-        console.log('polling',cache,data.data.getCoursesByTeacherId)
         this.setState({
           courses: data.data.getCoursesByTeacherId.map(({id, name}) => ({id, name}))
         });

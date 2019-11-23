@@ -5,6 +5,10 @@ import React, { Component } from 'react';
 import {View} from 'react-native'
 import { Input, Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Entypo'
+import gql from 'graphql-tag';
+import { client } from '../App';
+import { Auth } from 'aws-amplify';
+import { createCourse } from '../src/graphql/mutations'
  
 /** Screen component for adding courses */
 export default class AddCourseScreen extends Component {
@@ -32,9 +36,35 @@ export default class AddCourseScreen extends Component {
     this.setState({CourseDescription: text});
   }
 
+  /** Generate course id, borrowed from https://www.w3resource.com/javascript-exercises/javascript-function-exercise-20.php */
+  _generateId() {
+    var text = "";
+    var char_list = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for(var i=0; i < 64; i++ ) {  
+      text += char_list.charAt(Math.floor(Math.random() * char_list.length));
+    }
+    return text;
+  }
+
   /** Processes submission of the add course form */
   _processSubmit() {
-    console.log(this.state);
+    // Upload using GraphQL
+    generatedId = this._generateId();
+    Auth.currentAuthenticatedUser().then(user => {
+      client.mutate({
+        mutation: gql(createCourse),
+        variables: {input: {
+          id: generatedId,
+          teacherId: user.username,
+          name: this.state.CourseName,
+          description: this.state.CourseDescription,
+          students: []
+        }}
+      }).catch((e) => {
+        console.log(e);
+      });
+    });
+
     // Goes back if navigated from plus button, necessary to pop off stack
     this.props.navigation.goBack();
     // Goes back if navigated from drawer

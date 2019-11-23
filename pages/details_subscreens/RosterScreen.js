@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
-import { View} from 'react-native';
+import { View, RefreshControl } from 'react-native';
 import { FlatList } from 'react-navigation'
 import { ListItem, Overlay, Button, Text, Input } from 'react-native-elements'
 import { client } from '../../App';
@@ -31,7 +31,7 @@ export default class RosterScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {isOverlayVisible: false, newStudentName: "", students: []};
+    this.state = {isOverlayVisible: false, newStudentName: "", students: [], refreshing: false};
 
     this._startAddStudent = this._startAddStudent.bind(this);
     this._endAddStudent = this._endAddStudent.bind(this);
@@ -49,22 +49,23 @@ export default class RosterScreen extends Component {
   )
 
   componentWillMount() {
-    this.fetchRoster(this.props.navigation.state.params.courseId);
+    this.fetchRoster();
   }
 
   componentDidUpdate(prevProps) {
-    const courseId = this.props.navigation.state.params.courseId;
-    if (courseId != prevProps.navigation.state.params.courseId) {
-      this.fetchRoster(courseId);
+    if (this.props.navigation.state.params.courseId != prevProps.navigation.state.params.courseId) {
+      this.fetchRoster();
     }
   }
 
-  fetchRoster(id) {
+  fetchRoster(cache = "cache-first") {
+    const id = this.props.navigation.state.params.courseId;
     client.query({
       query: gql(getStudentsByCourseId),
       variables: {
         courseId: id
-      }
+      },
+      fetchPolicy: cache
     }).then((data) => {
       this.setState({
         students: data.data.getStudentsByCourseId.map(({id, name, picture}) => ({id, name, picture}))
@@ -121,6 +122,12 @@ export default class RosterScreen extends Component {
           keyExtractor={this.keyExtractor}
           data={this.state.students}
           renderItem={this.renderItem}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={() => this.fetchRoster("network-only")}
+            />
+          }
         />
         <Overlay isVisible={this.state.isOverlayVisible}  onBackdropPress={() => this.setState({ isOverlayVisible: false })}>
           <Text h2>Add a Student</Text>

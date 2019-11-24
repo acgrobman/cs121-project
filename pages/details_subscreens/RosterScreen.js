@@ -7,6 +7,8 @@ import { client } from '../../App';
 import { getStudentsByCourseId } from '../../src/graphql/queries'
 import { createStudent } from '../../src/graphql/mutations'
 import Icon from 'react-native-vector-icons/Entypo'
+import * as DocumentPicker from 'expo-document-picker'
+import * as FileSystem from 'expo-file-system'
 
 class PlusSign extends Component {
   _addStudent() {
@@ -36,6 +38,7 @@ export default class RosterScreen extends Component {
     this._startAddStudent = this._startAddStudent.bind(this);
     this._endAddStudent = this._endAddStudent.bind(this);
     this._handleName = this._handleName.bind(this);
+    this._uploadRoster = this._uploadRoster.bind(this);
   }
 
   renderItem = ({ item }) => (
@@ -113,15 +116,46 @@ export default class RosterScreen extends Component {
     this.setState({newStudentName: name})
   }
 
+  /** Event listener for user's to upload a course roster */
+  _uploadRoster() {
+    DocumentPicker.getDocumentAsync({type: 'text/csv'}).then( (res) =>{
+      if (res.type === 'success'){
+        FileSystem.readAsStringAsync(res.uri).then((contents) => {
+          let arr = contents.replace("\r", "").split('\n');
+          arr.forEach(element => {
+            if(element.toUpperCase().trim() !== "NAME") {
+              const courseId = this.props.navigation.state.params.courseId;
+              generatedId = this._generateId();
+              client.mutate({
+                mutation: gql(createStudent),
+                variables: {
+                  input: {
+                    courseId: courseId,
+                    id: generatedId,
+                    name: element,
+                    picture: 'http://www.cartoonbucket.com/wp-content/uploads/2015/08/Spongebob-Running.jpg',
+                    attendanceRecords: [],
+                  },
+                }
+              });
+            }
+          });
+        })
+      }
+    }).catch();
+  }
+
   render () {
 
     return (
-      <View>
-        <Button title="Add Student" onPress={this._startAddStudent}/>
+      <View style={{paddingBottom: 75}}>
+        <Button title="Add Student" onPress={this._startAddStudent} />
+        <Button title="Import Roster" onPress={this._uploadRoster}/>
         <FlatList
           keyExtractor={this.keyExtractor}
           data={this.state.students}
           renderItem={this.renderItem}
+          ListEmptyComponent={<Button title="Refresh" onPress={() => this.fetchRoster("network-only")} />}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}

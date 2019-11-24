@@ -2,17 +2,15 @@
 //https://aboutreact.com/react-native-navigation-drawer/
 
 import React, { Component } from 'react';
-import { RefreshControl } from 'react-native';
+import { View, RefreshControl } from 'react-native';
 import { Auth } from 'aws-amplify';
-import { View, Text } from 'react-native';
 import gql from 'graphql-tag';
 import { FlatList } from 'react-navigation';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Text, Button } from 'react-native-elements';
 import { getCoursesByTeacherId } from '../src/graphql/queries';
 import { client } from '../App';
+import Icon from 'react-native-vector-icons/Entypo';
 
-
- 
 export default class HomeScreen extends Component {
 
   state = {
@@ -58,11 +56,21 @@ export default class HomeScreen extends Component {
 
     return (
       <View>
-        {(courses && courses.length === 0) ? <Text> Add a course to get started</Text> : <Text></Text>}
+        {/* {(courses && courses.length === 0) ? <Text> Add a course to get started</Text> : <Text></Text>} */}
         <FlatList
           data={courses}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
+          ListEmptyComponent={      
+            <View>
+              <Text h5>Add a course then refresh to get started!</Text>
+              <Button 
+                title="Refresh" 
+                onPress={() => this.fetchCourses("network-only")}
+                icon={<Icon name="cycle" color="white" size={18} />}
+                />
+            </View>
+          }
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}

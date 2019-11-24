@@ -148,13 +148,14 @@ export default class RosterScreen extends Component {
   render () {
 
     return (
-      <View>
+      <View style={{paddingBottom: 75}}>
         <Button title="Add Student" onPress={this._startAddStudent} />
         <Button title="Import Roster" onPress={this._uploadRoster}/>
         <FlatList
           keyExtractor={this.keyExtractor}
           data={this.state.students}
           renderItem={this.renderItem}
+          ListEmptyComponent={<Button title="Refresh" onPress={() => this.fetchRoster("network-only")} />}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}

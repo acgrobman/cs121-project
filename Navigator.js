@@ -82,7 +82,7 @@ const AddCourse_StackNavigator = createStackNavigator({
       title: 'Add a Course',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#FF9800',
+        backgroundColor: '#65bf90',
       },
       headerTintColor: '#fff',
     }),
@@ -97,7 +97,7 @@ const Settings_StackNavigator = createStackNavigator({
       title: 'Settings',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#FF9800',
+        backgroundColor: '#65bf90',
       },
       headerTintColor: '#fff',
     }),

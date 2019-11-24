@@ -1,7 +1,7 @@
 import React from "react"
 import * as Permissions from 'expo-permissions';
 import { View, Text, YellowBox } from "react-native"
-import Amplify from "aws-amplify"
+import Amplify, { Hub, Analytics } from "aws-amplify"
 import { withAuthenticator, AmplifyTheme } from "aws-amplify-react-native"
 import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import Navigator from "./Navigator"
@@ -11,6 +11,7 @@ const MyButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#65b
 const MyTheme = Object.assign({}, AmplifyTheme, { button: MyButton });
 
 Amplify.configure(config);
+Analytics.disable();
 
 export const client = new AWSAppSyncClient({
 	url: config.aws_appsync_graphqlEndpoint,
@@ -29,6 +30,12 @@ class App extends React.Component {
 	async componentDidMount() {
 		const { status } = await Permissions.askAsync(Permissions.CAMERA);
 		this.setState({ hasCameraPermission: status === 'granted' });
+
+		Hub.listen('auth', (authData) => {
+			if (authData.payload.event === 'signOut') {
+			  this.props.onStateChange('signedOut', null);
+			}
+		});
 	}
 
 	render() {
@@ -47,6 +54,6 @@ class App extends React.Component {
 }
 
 // Prevent warning caused by AWS Amplify analytics from displaying
-YellowBox.ignoreWarnings(['Unhandled Promise', 'RNCNetInfo', 'Require cycle', 'Failed prop type']);
+YellowBox.ignoreWarnings(['Require cycle', 'Failed prop type']);
 
 export default withAuthenticator(App, {includeGreetings: false, usernameAttributes: 'email'}, [], null, MyTheme, {});

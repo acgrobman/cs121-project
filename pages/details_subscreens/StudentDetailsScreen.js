@@ -11,7 +11,7 @@ export default class StudentDetailsScreen extends Component {
       let pieData = this._pieChartOfAttendanceTypesData();
       let barData = this._barChartOfAbsencesByMonthData();
         return (
-            <View>
+            <SafeAreaView>
                 <Text>Placeholder</Text>
                 <Text h5>Proportional Attendance</Text>
                 <PieChart style={{ height: 200 }} data={pieData} />
@@ -19,7 +19,7 @@ export default class StudentDetailsScreen extends Component {
                 <BarChart style={{ height: 200 }} data={barData} svg={this._randomColor()} contentInset={{ top: 30, bottom: 30 }}>
                     <Grid />
                 </BarChart>
-            </View>
+            </SafeAreaView>
         )
     }
 

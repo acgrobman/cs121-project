@@ -11,10 +11,17 @@ import CameraScreen from './details_subscreens/CameraScreen';
 import RosterScreen from './details_subscreens/RosterScreen';
 import GraphScreen from './details_subscreens/GraphsScreen';
 import RemediationScreen from './details_subscreens/RemediationScreen';
+import { createStackNavigator } from 'react-navigation-stack';
+import StudentDetailsScreen from './details_subscreens/StudentDetailsScreen';
+
+const RosterStack = createStackNavigator({
+  RosterScr: RosterScreen,
+  StudDetails: StudentDetailsScreen,
+})
 
 const TabNavigator = createBottomTabNavigator({
   Camera: CameraScreen,
-  Roster: RosterScreen,
+  Roster: RosterStack,
   Graphs: GraphScreen,
   Remediation: RemediationScreen,
 },
@@ -45,7 +52,7 @@ const TabNavigator = createBottomTabNavigator({
 
 const AndroidTabNavigator = createMaterialBottomTabNavigator({
   Camera: CameraScreen,
-  Roster: RosterScreen,
+  Roster: RosterStack,
   Graphs: GraphScreen,
   Remediation: RemediationScreen,
 },
@@ -73,6 +80,5 @@ const AndroidTabNavigator = createMaterialBottomTabNavigator({
     activeTintColor: '#4d43e0',
   }
 });
-
 
 export default createAppContainer(Platform.OS==='ios'?TabNavigator:AndroidTabNavigator);

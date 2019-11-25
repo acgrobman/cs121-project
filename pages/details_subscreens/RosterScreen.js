@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { View, RefreshControl } from 'react-native';
-import { FlatList } from 'react-navigation'
+import { FlatList, withNavigation } from 'react-navigation'
 import { ListItem, Overlay, Button, Text, Input } from 'react-native-elements'
 import { client } from '../../App';
 import { getStudentsByCourseId } from '../../src/graphql/queries'
@@ -24,7 +24,7 @@ class PlusSign extends Component {
   }
 }
 
-export default class RosterScreen extends Component {
+export class RosterScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     headerRight: () =>(<PlusSign navigationProps={navigation} />) ,
@@ -45,7 +45,7 @@ export default class RosterScreen extends Component {
     <ListItem
       title={item.name}
       leftAvatar={{ source: { uri: item.picture } }}
-      onPress={() => alert('student details not yet implemented')}
+      onPress={() => this.props.navigation.navigate("StudDetails")}
       bottomDivider
       chevron
     />
@@ -188,3 +188,5 @@ export default class RosterScreen extends Component {
   }
     
 }
+
+export default withNavigation(RosterScreen);

@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { View } from "react-native";
 import { Text } from 'react-native-elements';
-import { PieChart } from 'react-native-svg-charts';
+import { PieChart, BarChart, Grid } from 'react-native-svg-charts';
 
 /** Displays details on a specific student. */
 export default class StudentDetailsScreen extends Component {
 
     /** Render component on screen */
     render() {
-      let data = this._pieChartData()
+      let pieData = this._pieChartOfAttendanceTypesData();
+      let barData = this._barChartOfAbsencesByMonthData();
         return (
             <View>
                 <Text>Placeholder</Text>
-                <PieChart style={{ height: 200 }} data={data} />
+                <Text h5>Proportional Attendance</Text>
+                <PieChart style={{ height: 200 }} data={pieData} />
+                <Text h5>Total Absences By Month</Text>
+                <BarChart style={{ height: 200 }} data={barData} svg={this._randomColor()} contentInset={{ top: 30, bottom: 30 }}>
+                    <Grid />
+                </BarChart>
             </View>
         )
     }
@@ -22,12 +28,31 @@ export default class StudentDetailsScreen extends Component {
      * 
      * Borrowed from https://github.com/JesperLekland/react-native-svg-charts#Prerequisites
      */
-    _randomColor = () => {
+    _randomColor()  {
         return ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7);
     }
 
-    /** Converts data to pie chart format */
-    _pieChartData() {
+    /** Generates absences by month of year data for a bar chart */
+    _barChartOfAbsencesByMonthData() {
+        // Placeholder for query to database
+        let attendanceData = JSON.parse(testAttendanceRecords);
+        
+        let absencesByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        for (const record of attendanceData) {
+            if(record.status.toUpperCase() !== "PRESENT") {
+                // Dates are in YEAR-MONTH-DAY format
+                month = record.date.split("-")[1];
+                // Account for zero indexing
+                absencesByMonth[month - 1]++;
+            }
+        }
+
+        return absencesByMonth;
+    }
+
+    /** Converts attendace data to pie chart format */
+    _pieChartOfAttendanceTypesData() {
         // Placeholder for query to database
         let attendanceData = JSON.parse(testAttendanceRecords);
 
@@ -36,13 +61,13 @@ export default class StudentDetailsScreen extends Component {
         // When we replace data with real AWS data, we should refactor this!
         let occurances = [0, 0, 0]
         for (const record of attendanceData) {
-            if (record.status.toLowerCase() === 'present'){
+            if (record.status.toUpperCase() === "PRESENT"){
                 occurances[0]++;
             }
-            else if (record.status.toLowerCase() === 'excused'){
+            else if (record.status.toUpperCase() === "EXCUSED"){
                 occurances[1]++;
             }
-            else if (record.status.toLowerCase() === 'unexcused'){
+            else if (record.status.toUpperCase() === "UNEXCUSED"){
                 occurances[2]++;
             }
         }
@@ -51,7 +76,7 @@ export default class StudentDetailsScreen extends Component {
             value,
             svg: {
                 fill: this._randomColor(),
-                onPress: () => console.log('press', index),
+                onPress: () => console.log("press", index),
             },
             key: `pie-${index}`,
         }));

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
-import { View, RefreshControl } from 'react-native';
+import { View, RefreshControl, Alert } from 'react-native';
 import { FlatList } from 'react-navigation'
 import { ListItem, Overlay, Button, Text, Input } from 'react-native-elements'
 import { client } from '../../App';
@@ -39,6 +39,26 @@ export default class RosterScreen extends Component {
     this._endAddStudent = this._endAddStudent.bind(this);
     this._handleName = this._handleName.bind(this);
     this._uploadRoster = this._uploadRoster.bind(this);
+    this._deletionPopUp = this._deletionPopUp.bind(this);
+  }
+
+  /** Show alert confirmining intent to delete, 
+   * and pass control to deletion function 
+   */
+  _deletionPopUp() {
+    Alert.alert(
+      "Confirmation",
+      "All data on this student will be removed permanently and cannot be recovered.",
+      [
+        {text: 'Return to Safety!', style: 'cancel'},
+        {text: 'Delete', onPress: this._deleteStudent, style: 'destructive'},
+      ],
+    );
+  }
+
+  /** Delete a given student */
+  _deleteStudent() {
+    console.log("DELETE!!!!!!!!!!!!!!!")
   }
 
   renderItem = ({ item }) => (
@@ -46,6 +66,7 @@ export default class RosterScreen extends Component {
       title={item.name}
       leftAvatar={{ source: { uri: item.picture } }}
       onPress={() => alert('student details not yet implemented')}
+      onLongPress={this._deletionPopUp}
       bottomDivider
       chevron
     />

@@ -18,11 +18,9 @@ class CameraScreen extends Component {
     };
 
     render () {
-
         const { isFocused } = this.props;
 
         if (!isFocused) return null;
-
 
         return (
             <View style={{ flex: 1 }}>
@@ -56,6 +54,5 @@ class CameraScreen extends Component {
         );
     }
 }
-
 
 export default withNavigationFocus(CameraScreen);

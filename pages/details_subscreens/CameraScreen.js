@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Camera } from 'expo-camera';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Alert } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { withNavigationFocus } from 'react-navigation'
 
@@ -13,6 +13,7 @@ class CameraScreen extends Component {
     snap = async () => {
         if (this.camera) {
             let photo = await this.camera.takePictureAsync();
+            Alert.alert("Success!", "The photo was taken and is now being processed.");
         }
     };
 
@@ -32,6 +33,7 @@ class CameraScreen extends Component {
                         backgroundColor: 'transparent',
                         flexDirection: 'row',
                     }}>
+                        {/* TouchableOpacity necessary. onPress for an Icon makes the icon gross when pressed. */}
                         <TouchableOpacity
                             style={{
                                 flex: 1,

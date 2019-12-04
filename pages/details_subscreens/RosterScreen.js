@@ -49,7 +49,7 @@ export default class RosterScreen extends Component {
   _deletionPopUp(id) {
     Alert.alert(
       "Confirmation",
-      "This student will be removed permanently and cannot be recovered.",
+      "This student will be removed permanently and cannot be recovered.\n\nYou may need to refresh the list after removal.",
       [
         {text: 'Return to Safety!', style: 'cancel'},
         {

@@ -5,7 +5,7 @@ import { FlatList } from 'react-navigation'
 import { ListItem, Overlay, Button, Text, Input } from 'react-native-elements'
 import { client } from '../../App';
 import { getStudentsByCourseId } from '../../src/graphql/queries'
-import { createStudent } from '../../src/graphql/mutations'
+import { createStudent, deleteStudent } from '../../src/graphql/mutations'
 import Icon from 'react-native-vector-icons/Entypo'
 import * as DocumentPicker from 'expo-document-picker'
 import * as FileSystem from 'expo-file-system'
@@ -42,23 +42,41 @@ export default class RosterScreen extends Component {
     this._deletionPopUp = this._deletionPopUp.bind(this);
   }
 
-  /** Show alert confirmining intent to delete, 
-   * and pass control to deletion function 
+  /** 
+   * Show alert confirmining intent to delete, 
+   * and pass control to deletion function if appropriate
    */
-  _deletionPopUp() {
+  _deletionPopUp(id) {
     Alert.alert(
       "Confirmation",
-      "All data on this student will be removed permanently and cannot be recovered.",
+      "This student will be removed permanently and cannot be recovered.",
       [
         {text: 'Return to Safety!', style: 'cancel'},
-        {text: 'Delete', onPress: this._deleteStudent, style: 'destructive'},
+        {
+          text: 'Delete',
+          onPress: this._deleteStudent.bind(this, id),
+          style: 'destructive'},
       ],
     );
   }
 
-  /** Delete a given student */
-  _deleteStudent() {
-    console.log("DELETE!!!!!!!!!!!!!!!")
+  /** 
+   * Delete a given student.
+   *
+   * Note: This does not delete any attendance records associated
+   * with that student. 
+   */
+  _deleteStudent(id) {
+    const courseId = this.props.navigation.state.params.courseId;
+    client.mutate({
+      mutation: gql(deleteStudent),
+      variables: {
+        input: {
+          courseId: courseId,
+          id: id,
+        },
+      }
+    });
   }
 
   renderItem = ({ item }) => (
@@ -66,7 +84,7 @@ export default class RosterScreen extends Component {
       title={item.name}
       leftAvatar={{ source: { uri: item.picture } }}
       onPress={() => alert('student details not yet implemented')}
-      onLongPress={this._deletionPopUp}
+      onLongPress={this._deletionPopUp.bind(this, item.id)}
       bottomDivider
       chevron
     />
@@ -100,7 +118,7 @@ export default class RosterScreen extends Component {
   }
 
     
-  keyExtractor = (item, index) => index.toString()
+  keyExtractor = (item, index) => item.id;
   
   _startAddStudent() {
     this.setState({isOverlayVisible: true});

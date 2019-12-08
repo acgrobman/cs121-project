@@ -16,6 +16,7 @@ import HomeScreen from './pages/HomeScreen';
 import AddCourseScreen from './pages/AddCourseScreen';
 import SettingsScreen from './pages/SettingsScreen';
 import DetailsScreen from './pages/DetailsScreen';
+import HelpScreen from './pages/HelpScreen.js';
 
 class NavigationDrawerStructure extends Component {
   //Structure for the navigatin Drawer
@@ -89,6 +90,21 @@ const AddCourse_StackNavigator = createStackNavigator({
   },
 });
 
+const Help_StackNavigator = createStackNavigator({
+  //All the screen from the Screen2 will be indexed here
+  Page: {
+    screen: HelpScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Help',
+      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#65bf90',
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+});
+
 const Settings_StackNavigator = createStackNavigator({
   //All the screen from the Screen3 will be indexed here
   Third: {
@@ -146,6 +162,13 @@ const DrawerNavigatorExample = createDrawerNavigator({
       drawerIcon: <Icon name='cog' size={20}/>
     },
   },
+  HelpScreen: {
+    screen: Help_StackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Help',
+      drawerIcon: <Icon name='help' size={20}/>
+    }
+  }
 }, {
     contentComponent: CustomDrawerContentComponent,
 });
